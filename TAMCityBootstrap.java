@@ -15,103 +15,78 @@ import fr.theshark34.supdate.SUpdate;
 import fr.theshark34.supdate.application.integrated.FileDeleter;
 import fr.theshark34.swinger.animation.Animator;
 
-public class TAMCityBootstrap{
+public class TAMCityBootstrap
+{
+	private static String siteweb = "http://mdl-anguier.fr/TAMCityLauncher";
 	
-
-	
-	
-	static final File TAM_B_DIR = new File(GameDirGenerator.createGameDir("TAMCity"), "Launcher");
-	public static final File TAM_B_CRASHES = new File(TAM_B_DIR, "crashes");
-	
-	
-
-	
-	private static Thread updateThread;	
-	private static CrashReporter crashReporter = new CrashReporter("TAMCity Bootstrap", TAM_B_CRASHES);
-
-	
-
-public static void updateLauncher() throws Exception {
-		SUpdate su = new SUpdate("https://tamcity.000webhostapp.com/bootstrap/", TAM_B_DIR);
-		if(BootstrapPanel.betaActive.isSelected()) {
-			su = new SUpdate("https://tamcity.000webhostapp.com/bootstrap_beta/", TAM_B_DIR);
-		}
-		su.addApplication(new FileDeleter());
-		su.getServerRequester().setRewriteEnabled(true);
-		
-		
-		updateThread = new Thread() {
-			
-			private int val;
-			private int max;
-			
-			@Override
-			public void run() {
-				
-				while(!this.isInterrupted()) {
-					
-					
-					
-					val = (int) (BarAPI.getNumberOfTotalDownloadedBytes() / 1000);
-					max = (int) (BarAPI.getNumberOfTotalBytesToDownload() / 1000);
-					
-					BootstrapFrame.getInstance().getLauncherPanel().getPrograssBar().setMaximum(max);
-					BootstrapFrame.getInstance().getLauncherPanel().getPrograssBar().setValue(val);
-					
-				}
-			}
-		};
-		updateThread.start();
-		su.start();
-		updateThread.interrupt();
-		
-	}
-
-static void launch() throws LaunchException {
-	
-	
-	
-	
-	ClasspathConstructor constructor = new ClasspathConstructor();
-	ExploredDirectory gameDir = Explorer.dir(TAM_B_DIR);
-	constructor.add(gameDir.sub("Libs").allRecursive().files().match("^(.*\\.((jar)$))*$"));
-	constructor.add(gameDir.get("launcher.jar"));
-	
-	
-	ExternalLaunchProfile profile = new ExternalLaunchProfile("fr.tamcity.launcher.LauncherFrame", constructor.make());
-	ExternalLauncher launcher = new ExternalLauncher(profile);
-
-	Process b = launcher.launch();
-	BootstrapFrame.getInstance().setVisible(false);
-
-	try {
-		b.waitFor();
-	} catch (InterruptedException ignored) {
-	
-	}
-	
-	Animator.fadeOutFrame(BootstrapFrame.getInstance(), 5,new Runnable() {
-		
-		public void run() {
-			System.exit(0);
-			
-		}
-	});
-	
-}
-	
-	
-
-public static void interruptThread() {
-	updateThread.interrupt();
-}
-	
-	
-public static CrashReporter getCrashReporter(){
-	return crashReporter;
-}	
-	
-
-	
-
+    static final File TAM_B_DIR = new File(GameDirGenerator.createGameDir("TAMCity"), "Launcher");
+    public static final File TAM_B_CRASHES = new File(TAMCityBootstrap.TAM_B_DIR, "crashes");
+    
+    
+    private static Thread updateThread;
+    private static CrashReporter crashReporter = new CrashReporter("TAMCity Bootstrap", TAMCityBootstrap.TAM_B_CRASHES);
+    
+    
+    public static void updateLauncher() throws Exception {
+        SUpdate su = new SUpdate(siteweb + "/bootstrap/", TAM_B_DIR);
+        if (BootstrapPanel.betaActive.isSelected()) {
+            su = new SUpdate(siteweb + "/bootstrap_beta/", TAM_B_DIR);
+        }
+        su.addApplication(new FileDeleter());
+        su.getServerRequester().setRewriteEnabled(true);
+        
+        
+        updateThread = new Thread() {
+            private int val;
+            private int max;
+            
+            @Override
+            public void run() {
+                while (!this.isInterrupted()) {
+                    val = (int)(BarAPI.getNumberOfTotalDownloadedBytes() / 1000);
+                    max = (int)(BarAPI.getNumberOfTotalBytesToDownload() / 1000);
+                    BootstrapFrame.getInstance().getLauncherPanel().getPrograssBar().setMaximum(max);
+                    BootstrapFrame.getInstance().getLauncherPanel().getPrograssBar().setValue(val);
+                }
+            }
+        };
+        updateThread.start();
+        su.start();
+        updateThread.interrupt();
+    }
+    
+    static void launch() throws LaunchException {
+    	
+        ClasspathConstructor constructor = new ClasspathConstructor();
+        ExploredDirectory gameDir = Explorer.dir(TAM_B_DIR);
+        constructor.add(gameDir.sub("Libs").allRecursive().files().match("^(.*\\.((jar)$))*$"));
+        constructor.add(gameDir.get("launcher.jar"));
+        
+        
+        ExternalLaunchProfile profile = new ExternalLaunchProfile("fr.tamcity.launcher.LauncherFrame", constructor.make());
+        ExternalLauncher launcher = new ExternalLauncher(profile);
+        
+        Process b = launcher.launch();
+        BootstrapFrame.getInstance().setVisible(false);
+        
+        try {
+            b.waitFor();
+        }
+        catch (InterruptedException ignored) {
+        	
+        }
+        Animator.fadeOutFrame(BootstrapFrame.getInstance(), 5, new Runnable() {
+            public void run() {
+                System.exit(0);
+            }
+        });
+    }
+    
+    public static void interruptThread() {
+        updateThread.interrupt();
+    }
+    
+    public static CrashReporter getCrashReporter() {
+        return crashReporter;
+    }
 }
