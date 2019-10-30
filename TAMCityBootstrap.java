@@ -17,7 +17,7 @@ import fr.theshark34.swinger.animation.Animator;
 
 public class TAMCityBootstrap
 {
-	private static String siteweb = "http://mdl-anguier.fr/TAMCityLauncher";
+    private static String siteweb = "http://mdl-anguier.fr/TAMCityLauncher";
 	
     static final File TAM_B_DIR = new File(GameDirGenerator.createGameDir("TAMCity"), "Launcher");
     public static final File TAM_B_CRASHES = new File(TAMCityBootstrap.TAM_B_DIR, "crashes");
