@@ -7,13 +7,13 @@ import com.sun.awt.AWTUtilities;
 import fr.theshark34.openlauncherlib.util.CrashReporter;
 import fr.theshark34.swinger.Swinger;
 import fr.theshark34.swinger.animation.Animator;
-
+//test
 
 @SuppressWarnings("serial")
 public class BootstrapFrame extends JFrame{
 
 	
-	private static BootstrapFrame instance;
+	private static BootstrapFrameinstance;
 	private BootstrapPanel bootstrapPanel;
 	private static CrashReporter crashReporter;
 	
