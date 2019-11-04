@@ -18,7 +18,7 @@ import fr.theshark34.swinger.animation.Animator;
 public class TAMCityBootstrap{
 	
 
-	
+	public static final String DOMAINE = new String ("http://mdl-anguier.fr/TAMCityLauncher");
 	
 	static final File TAM_B_DIR = new File(GameDirGenerator.createGameDir("TAMCity"), "Launcher");
 	public static final File TAM_B_CRASHES = new File(TAM_B_DIR, "crashes");
@@ -32,9 +32,9 @@ public class TAMCityBootstrap{
 	
 
 public static void updateLauncher() throws Exception {
-		SUpdate su = new SUpdate("http://mdl-anguier.fr/TAMCityLauncher/bootstrap/", TAM_B_DIR);
+		SUpdate su = new SUpdate(DOMAINE + "/bootstrap/", TAM_B_DIR);
 		if(BootstrapPanel.betaActive.isSelected()) {
-			su = new SUpdate("http://mdl-anguier.fr/TAMCityLauncher/bootstrap_beta/", TAM_B_DIR);
+			su = new SUpdate(DOMAINE + "/bootstrap_beta/", TAM_B_DIR);
 		}
 		su.addApplication(new FileDeleter());
 		su.getServerRequester().setRewriteEnabled(true);
