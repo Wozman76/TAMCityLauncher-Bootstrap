@@ -9,7 +9,7 @@ import fr.theshark34.swinger.Swinger;
 import fr.theshark34.swinger.animation.Animator;
 
 
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "restriction" })
 public class BootstrapFrame extends JFrame{
 
 	

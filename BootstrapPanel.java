@@ -32,7 +32,7 @@ public class BootstrapPanel extends JPanel implements SwingerEventListener, Acti
 	
 	private SColoredBar progressBar = new SColoredBar(Swinger.getTransparentWhite(100), Swinger.getTransparentWhite(175));
 
-	private JLabel versionLabel = new JLabel("v1.0.10");
+	private JLabel versionLabel = new JLabel("v1.0.11");
 
 	private JFrame updateError = new JFrame();
 	
